@@ -1,17 +1,16 @@
-function [ ] = shocktubeanalytic( p_l, T_l, U_l, p_r, T_r, U_r )
+function [ ] = shocktubeanalytic( )
 %SHOCKTUBEANALYTIC Plots analytical solution of shock tube problem
 %   A long 1-D tube is divided into two equal regions by a thin diaphragm.
 %   The left side has pressure p_l (Pa), temperature T_l (K), velocity U_l
 %   (m)/(s). The right side has pressure p_r, temperature T_r, and 
 %   velocity U_r.
 
-%% Temporary (PRESSURE ON LEFT MUST BE GREATER THAN RIGHT OTHERWISE YOU MESS UP)
+%% Initial Conditions
+% (PRESSURE ON LEFT MUST BE GREATER THAN RIGHT OTHERWISE YOU MESS UP)
 p_l = 2;
-T_l = 1;
-U_l = 0;
+T_l = 300;
 p_r = 1;
-T_r = 1;
-U_r = 0;
+T_r = 300;
 
 %% Physical constants
 
@@ -23,7 +22,7 @@ L = 1;
 epsilon = L / 1e10;
 
 % Time of interest (s)
-t = 0.050;
+t = 0.001;
 
 %% Gas-dependent constants
 
@@ -124,28 +123,28 @@ hold on
 still_space = 10;
 points_l = [-L x_1_];
 points_e = linspace( x_1_, x_2_, 1000 );
-points_2 = [ x_2_ x_3_ ];
+points_2 = [ x_2_ x_2_+epsilon x_3_ ];
 points_1 = [ x_3_ x_3_+epsilon x_4_ ];
 points_r = [x_4_ x_4_+epsilon L];
 
 % Get nondimensional velocity U
 U_l_region = [0 0];
 U_e_region = ExpansionFan_U_e_( points_e );
-U_2_region = [U_2_ U_2_];
+U_2_region = [U_2_ U_2_ U_2_];
 U_1_region = [U_1_ U_1_ U_1_];
 U_r_region = [U_1_ 0 0];
 
 % Plot nondimensional pressure p
 p_l_region = [p_l_ p_l_];
 p_e_region = ExpansionFan_p_e_( points_e );
-p_2_region = [p_2_ p_2_];
+p_2_region = [p_2_ p_2_ p_2_];
 p_1_region = [p_1_ p_1_ p_1_];
 p_r_region = [p_1_ p_r_ p_r_];
 
 % Plot nondimensional density den
 den_l_region = [den_l_ den_l_];
 den_e_region = ExpansionFan_den_e_( points_e );
-den_2_region = [den_2_ den_2_];
+den_2_region = [den_2_ den_2_ den_2_];
 den_1_region = [den_2_ den_1_ den_1_];
 den_r_region = [den_1_ den_r_ den_r_];
 
