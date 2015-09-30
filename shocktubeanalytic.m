@@ -128,28 +128,38 @@ points_2 = [ x_2_ x_3_ ];
 points_1 = [ x_3_ x_3_+epsilon x_4_ ];
 points_r = [x_4_ x_4_+epsilon (x_4_ + still_space)];
 
-% Plot nondimensional velocity U
-plot( points_l, [0 0], 'r-' );
-plot( points_e, ExpansionFan_U_e_( points_e ), 'r-' );
-plot( points_2, [U_2_ U_2_], 'r-' );
-plot( points_1, [U_1_ U_1_ U_1_], 'r-' );
-plot( points_r, [U_1_ 0 0], 'r-' );
+% Get nondimensional velocity U
+U_l_region = [0 0];
+U_e_region = ExpansionFan_U_e_( points_e );
+U_2_region = [U_2_ U_2_];
+U_1_region = [U_1_ U_1_ U_1_];
+U_r_region = [U_1_ 0 0];
 
 % Plot nondimensional pressure p
-plot( points_l, [p_l_ p_l_], 'g-' );
-plot( points_e, ExpansionFan_p_e_( points_e ), 'g-' );
-plot( points_2, [p_2_ p_2_], 'g-' );
-plot( points_1, [p_1_ p_1_ p_1_], 'g-' );
-plot( points_r, [p_1_ p_r_ p_r_], 'g-' );
+p_l_region = [p_l_ p_l_];
+p_e_region = ExpansionFan_p_e_( points_e );
+p_2_region = [p_2_ p_2_];
+p_1_region = [p_1_ p_1_ p_1_];
+p_r_region = [p_1_ p_r_ p_r_];
 
 % Plot nondimensional density den
-plot( points_l, [den_l_ den_l_], 'b-' );
-plot( points_e, ExpansionFan_den_e_( points_e ), 'b-' );
-plot( points_2, [den_2_ den_2_], 'b-' );
-plot( points_1, [den_2_ den_1_ den_1_], 'b-' );
-plot( points_r, [den_1_ den_r_ den_r_], 'b-' );
+den_l_region = [den_l_ den_l_];
+den_e_region = ExpansionFan_den_e_( points_e );
+den_2_region = [den_2_ den_2_];
+den_1_region = [den_2_ den_1_ den_1_];
+den_r_region = [den_1_ den_r_ den_r_];
 
-title( 'The Plot' );
+% Concat the values
+all_points = [points_l points_e points_2 points_1 points_r];
+all_U = [U_l_region U_e_region U_2_region U_1_region U_r_region];
+all_p = [p_l_region p_e_region p_2_region p_1_region p_r_region];
+all_den = [den_l_region den_e_region den_2_region den_1_region den_r_region];
+
+% Plot
+plot( all_points, [all_U; all_p; all_den] )
+
+title( sprintf(' Analytic solution at nondimensional time t = %s', t_) );
+legend( 'Velocity', 'Pressure', 'Density' );
 
 %% Convert physical variables to non-dimensional variables.
 % Non-dimensional variables are denoted by a trailing underscore. Reference
