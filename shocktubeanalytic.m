@@ -23,7 +23,7 @@ L = 1;
 epsilon = L / 1e10;
 
 % Time of interest (s)
-t = 1;
+t = 0.050;
 
 %% Gas-dependent constants
 
@@ -122,11 +122,11 @@ hold on
 
 % Set domain
 still_space = 10;
-points_l = [(x_1_ - still_space) x_1_];
+points_l = [-L x_1_];
 points_e = linspace( x_1_, x_2_, 1000 );
 points_2 = [ x_2_ x_3_ ];
 points_1 = [ x_3_ x_3_+epsilon x_4_ ];
-points_r = [x_4_ x_4_+epsilon (x_4_ + still_space)];
+points_r = [x_4_ x_4_+epsilon L];
 
 % Get nondimensional velocity U
 U_l_region = [0 0];
@@ -159,6 +159,10 @@ all_den = [den_l_region den_e_region den_2_region den_1_region den_r_region];
 plot( all_points, [all_U; all_p; all_den] )
 
 title( sprintf(' Analytic solution at nondimensional time t = %s', t_) );
+xlabel( 'Nondimensional position' )
+ylabel( 'Nondimensional value' )
+axis( [-1 1 0 2] )
+grid on
 legend( 'Velocity', 'Pressure', 'Density' );
 
 %% Convert physical variables to non-dimensional variables.
